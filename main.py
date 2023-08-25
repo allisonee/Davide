@@ -1,31 +1,5 @@
 import streamlit as st
-import os
-from langchain import PromptTemplate
-from langchain.llms import OpenAI
-
-# LLM code below
-
-template = """
-  Compare the following two clauses and identify any inconsistencies between them. Do not identify inconsistencies that are immaterial or insubstantial (for example, ignore inconsistencies in language and style). Only identify material inconsistencies that alter the meaning of the text, including any differences in scope between the two clauses.
-
-  Below are the two clauses:
-  FIRST_CLAUSE: {first_clause}
-  SECOND_CLAUSE: {second_clause}
-
-  YOUR RESPONSE:
-"""
-
-prompt = PromptTemplate(
-  input_variables=("first_clause", "second_clause"),
-  template=template,
-)
-
-def load_LLM():
-  llm = OpenAI(temperature=0, model_name="gpt-4")
-  return llm
-
-llm = load_LLM()
-
+from compare_llm_handler import compare_clauses
 
 # Client code below
 
@@ -49,11 +23,9 @@ if option_choice == 'Compare':
 
   if st.button('Submit'):
       with st.spinner("Comparing the clauses..."):
-          prompt_with_clauses = prompt.format(first_clause=textFirstClause, second_clause=textSecondClause)
-          compared_clauses = llm(prompt_with_clauses)
+          compared_clauses = compare_clauses(textSecondClause, textSecondClause)
+          compared_clauses
           
-          st.write(compared_clauses)
-
 elif option_choice == 'Summarize':
    "Summarize is not yet supported"
 
