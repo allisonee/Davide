@@ -1,5 +1,6 @@
 import streamlit as st
 from compare_llm_handler import compare_clauses
+from suggestion_llm_handler import suggest_amendments
 
 # Client code below
 
@@ -9,7 +10,7 @@ st.text("A legal AI toolkit")
 
 option_choice = st.selectbox(
    "What do you need help with?",
-   ('Compare', 'Summarize')
+   ('Compare', 'Suggest Amendments', 'Summarize')
 )
 
 if option_choice == 'Compare':
@@ -25,6 +26,15 @@ if option_choice == 'Compare':
       with st.spinner("Comparing the clauses..."):
           compared_clauses = compare_clauses(textSecondClause, textSecondClause)
           compared_clauses
+
+if option_choice == 'Suggest Amendments':
+   clauseText = st.text_area(label="Clause", height=200, placeholder="Add clause here", key="clause")
+   favorableParty = st.text_area(label="Favorable Party", height=50, placeholder="Indicate which party you'd prefer to suggest favorable amendments to", key="favorable_party")
+   
+   if st.button('Submit'):
+      with st.spinner("Finding amendment suggestions..."):
+          suggested_amendments = suggest_amendments(clauseText, favorableParty)
+          suggested_amendments
           
 elif option_choice == 'Summarize':
    "Summarize is not yet supported"
