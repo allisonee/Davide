@@ -24,7 +24,7 @@ if option_choice == 'Compare':
 
   if st.button('Submit'):
       with st.spinner("Comparing the clauses..."):
-          compared_clauses = compare_clauses(textSecondClause, textSecondClause)
+          compared_clauses = compare_clauses(textFirstClause, textSecondClause)
           compared_clauses
 
 if option_choice == 'Suggest Amendments':
